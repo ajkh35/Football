@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Football</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="football">Football</string>
+    <string name="welcome">This is a simple mobile application to display latest results from bundesliga
+            games. The data is obtained from OpenLigaDB. OpenLigaDB provides latest game scores and
+            league standings.</string>
+    <string name="ranking">Ranking</string>
+    <string name="game_results">Game Results</string>
+    <string name="quiz">Quiz</string>
+    <string name="fc_nurnberg">FC Nurnberg</string>
+
+    <string-array name="teamlist">
+        <item>Bayern Munchen</item>
+        <item>Borussia Dortmund</item>
+        <item>Bayer 04 Leverkusen</item>
+        <item>Eintracht Frankfurt</item>
+        <item>SC Freiburg</item>
+        <item>Hamburger SV</item>
+        <item>Hannover 96</item>
+        <item>FC Schalke 04</item>
+        <item>1. FSV Mainz 05</item>
+        <item>Borussia Monchengladbach</item>
+        <item>Vfb Suttgart</item>
+        <item>Werder Bremen</item>
+        <item>Fortuna Dusseldorf</item>
+        <item>1. FC Nurnberg</item>
+        <item>Vfs Wolfsburg</item>
+        <item>FC Augsburg</item>
+        <item>TSG 1899 Hoffenheim</item>
+        <item>SpVgg Greuther Fuerth</item>
+    </string-array>
+</resources>
