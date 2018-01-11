@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
                 JSONArray jsonArray = null;
                 try {
                     String str = new AllTeamsService()
-                            .execute("https://www.openligadb.de/api/getavailableteams/bl1/2016").get();
+                            .execute(getResources().getString(R.string.all_teams_url)).get();
                     jsonArray = (JSONArray) new JSONParser().parse(str);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

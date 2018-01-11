@@ -13,6 +13,7 @@
     <string name="game_results">Game Results</string>
     <string name="quiz">Quiz</string>
     <string name="fc_nurnberg">FC Nurnberg</string>
+    <string name="all_teams_url">https://www.openligadb.de/api/getavailableteams/bl1/2016</string>
 
     <string-array name="teamlist">
         <item>Bayern Munchen</item>
