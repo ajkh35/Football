@@ -13,7 +13,9 @@ import mobile_computing.project.football.Adapters.RankingAdapter;
 public class RankingActivity extends AppCompatActivity {
 
     private ListView mTeamsList;
-    private String[] mList;
+
+    //Dummy Team List
+//    private String[] mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +23,16 @@ public class RankingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ranking);
 
         mTeamsList = findViewById(R.id.teams_list);
-        mList = getResources().getStringArray(R.array.teamlist);
+
+        //Dummy Team List
+//        mList = getResources().getStringArray(R.array.teamlist);
 
         JSONArray array = null;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String str = (String) bundle.get("Array");
             try {
-                array = (JSONArray) new JSONParser().parse(str);
+                array = (JSONArray) new JSONParser()
+                        .parse((String) bundle.get(Constants.ALL_TEAMS_ARRAY));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

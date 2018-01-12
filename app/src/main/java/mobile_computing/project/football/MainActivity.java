@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,9 +23,12 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import mobile_computing.project.football.Models.Match;
 import mobile_computing.project.football.Services.AllTeamsService;
+import mobile_computing.project.football.Services.GameResultsService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,12 +37,15 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
         }
 
+        //FAB
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,14 +65,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Ranking activity launcher
         Button ranking = findViewById(R.id.ranking);
         ranking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(Constants.TAG, Constants.RANKING_ACTIVITY_LAUNCHED);
                 JSONArray jsonArray = null;
                 try {
-                    String str = new AllTeamsService()
-                            .execute(getResources().getString(R.string.all_teams_url)).get();
+                    String str = new AllTeamsService().execute().get();
                     jsonArray = (JSONArray) new JSONParser().parse(str);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -76,11 +85,80 @@ public class MainActivity extends AppCompatActivity
 
                 Intent intent = new Intent(MainActivity.this, RankingActivity.class);
                 if (jsonArray != null) {
-                    intent.putExtra("Array", jsonArray.toString());
+                    intent.putExtra(Constants.ALL_TEAMS_ARRAY, jsonArray.toJSONString());
                 }
                 startActivity(intent);
             }
         });
+
+        // GameResults activity launcher
+        Button gameResults = findViewById(R.id.game_results);
+        gameResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.TAG, Constants.GAMERESULTS_ACTIVITY_LAUNCHED);
+                JSONArray array = null;
+                try {
+                    String str = new GameResultsService().execute().get();
+                    array = (JSONArray) new JSONParser().parse(str);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(MainActivity.this,GameResultsActivity.class);
+                intent.putExtra(Constants.GAME_RESULTS_ARRAY, getMatchList(array));
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * Get array list of matches
+     * @param array
+     * @return ArrayList of matches
+     */
+    private ArrayList<Match> getMatchList(JSONArray array){
+        ArrayList<Match> list = new ArrayList<>();
+        int i=0;
+        while (i < 50){
+            Match match = new Match();
+            JSONObject json = (JSONObject) array.get(i);
+            JSONObject group = (JSONObject) json.get("Group");
+            JSONObject team1 = (JSONObject) json.get("Team1");
+            JSONObject team2 = (JSONObject) json.get("Team2");
+            JSONArray results = (JSONArray) json.get("MatchResults");
+
+            // set the properties
+            match.setmGroupID(Integer.parseInt(group.get("GroupID").toString()));
+            match.setmGroupName((String) group.get("GroupName"));
+            match.setmGroupOrderID(Integer.parseInt(group.get("GroupOrderID").toString()));
+            match.setmLeagueID(Integer.parseInt(json.get("LeagueId").toString()));
+            match.setmLeagueName((String) json.get("LeagueName"));
+            match.setmMatchID(Integer.parseInt(json.get("MatchID").toString()));
+            match.setmTeamIconUrl((String) team1.get("TeamIconUrl"));
+            match.setmTeamID(Integer.parseInt(team1.get("TeamId").toString()));
+            match.setmTeamName((String) team1.get("TeamName"));
+            match.setmTeamTwoIconUrl((String) team2.get("TeamIconUrl"));
+            match.setmTeamTwoID(Integer.parseInt(team2.get("TeamId").toString()));
+            match.setmTeamTwoName((String) team2.get("TeamName"));
+            match.setmTeamScore(Integer.parseInt(((JSONObject)
+                    results.get(0)).get("PointsTeam1").toString()));
+            match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+                    results.get(0)).get("PointsTeam2").toString()));
+//            match.setmTeamScore(Integer.parseInt(((JSONObject)
+//                    results.get("MatchResult")).get("PointsTeam1").toString()));
+//            match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+//                    results.get("MatchResult")).get("PointsTeam2").toString()));
+
+            // add to list and increment
+            list.add(match);
+            i++;
+        }
+        return list;
     }
 
     @Override
