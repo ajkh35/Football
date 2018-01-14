@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mobile_computing.project.football.QuizActivity">
+
+    <include
+        layout="@layout/my_toolbar"/>
+
+    <RelativeLayout
+        android:background="@android:color/background_dark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/test_your_knowledge"
+            android:layout_gravity="top"
+            android:text="@string/test"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <LinearLayout
+            android:id="@+id/enter_scores"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/team1_score"
+                android:hint="@string/enter_score"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/colon"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/team2_score"
+                android:hint="@string/enter_score"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_75"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/versus"
+                android:layout_weight="0.3"
+                android:text="@string/fc_nurnberg"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"/>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_weight="0.3"
+                android:text="@string/a_date"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_margin="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/resolve"
+                    android:layout_gravity="center"
+                    android:text="@string/resolve"
+                    android:backgroundTint="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/reset"
+                    android:layout_gravity="center"
+                    android:text="@string/reset"
+                    android:backgroundTint="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

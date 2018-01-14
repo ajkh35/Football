@@ -24,8 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RankingActivity" />
-        <activity android:name=".GameResultsActivity"></activity>
+        <activity
+            android:name=".RankingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GameResultsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".QuizActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -8,10 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -29,9 +27,12 @@ import java.util.concurrent.ExecutionException;
 import mobile_computing.project.football.Models.Match;
 import mobile_computing.project.football.Services.AllTeamsService;
 import mobile_computing.project.football.Services.GameResultsService;
+import mobile_computing.project.football.Utilities.Constants;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        /*implements NavigationView.OnNavigationItemSelectedListener*/ {
+
+    private JSONArray mGameResultsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,9 @@ public class MainActivity extends AppCompatActivity
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,android.R.color.background_dark));
         }
 
         //FAB
@@ -56,14 +58,14 @@ public class MainActivity extends AppCompatActivity
         });
 
         //Drawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
         // Ranking activity launcher
         Button ranking = findViewById(R.id.ranking);
@@ -97,10 +99,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Log.i(Constants.TAG, Constants.GAMERESULTS_ACTIVITY_LAUNCHED);
-                JSONArray array = null;
                 try {
                     String str = new GameResultsService().execute().get();
-                    array = (JSONArray) new JSONParser().parse(str);
+                    mGameResultsArray = (JSONArray) new JSONParser().parse(str);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -109,8 +110,33 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                Intent intent = new Intent(MainActivity.this,GameResultsActivity.class);
-                intent.putExtra(Constants.GAME_RESULTS_ARRAY, getMatchList(array));
+                Intent intent = new Intent(MainActivity.this, GameResultsActivity.class);
+                if(mGameResultsArray != null){ intent.putExtra(Constants.GAME_RESULTS_ARRAY,
+                        getMatchList(mGameResultsArray)); }
+                startActivity(intent);
+            }
+        });
+
+        // Quiz launcher
+        Button quiz = findViewById(R.id.quiz);
+        quiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.TAG, Constants.QUIZ_LAUNCHED);
+                try {
+                    String str = new GameResultsService().execute().get();
+                    mGameResultsArray = (JSONArray) new JSONParser().parse(str);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                if(mGameResultsArray != null){ intent.putExtra(Constants.QUIZ_DATA,
+                        getMatchList(mGameResultsArray)); }
                 startActivity(intent);
             }
         });
@@ -124,7 +150,9 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Match> getMatchList(JSONArray array){
         ArrayList<Match> list = new ArrayList<>();
         int i=0;
-        while (i < 50){
+        while (i < array.size()){
+
+            // initialize json objects
             Match match = new Match();
             JSONObject json = (JSONObject) array.get(i);
             JSONObject group = (JSONObject) json.get("Group");
@@ -149,10 +177,7 @@ public class MainActivity extends AppCompatActivity
                     results.get(0)).get("PointsTeam1").toString()));
             match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
                     results.get(0)).get("PointsTeam2").toString()));
-//            match.setmTeamScore(Integer.parseInt(((JSONObject)
-//                    results.get("MatchResult")).get("PointsTeam1").toString()));
-//            match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
-//                    results.get("MatchResult")).get("PointsTeam2").toString()));
+            match.setmMatchDate((String) json.get("MatchDateTime"));
 
             // add to list and increment
             list.add(match);
@@ -193,28 +218,28 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.nav_camera) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 }

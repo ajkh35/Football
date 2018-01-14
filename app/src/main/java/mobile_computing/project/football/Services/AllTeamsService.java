@@ -35,14 +35,15 @@ public class AllTeamsService extends AsyncTask<String,Integer,String> {
         try {
             URL url = new URL(URL);
             URLConnection conn = url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream(), "UTF-8")
+            );
             result = readInput(reader);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 }

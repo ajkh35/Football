@@ -12,6 +12,7 @@ public class Match implements Serializable{
     private String mGroupName;
     private int mGroupOrderID;
     private int mMatchID;
+    private String mMatchDate;
     private int mLeagueID;
     private String mLeagueName;
     private String mTeamName;
@@ -140,5 +141,13 @@ public class Match implements Serializable{
 
     public void setmTeamTwoScore(int mTeamTwoScore) {
         this.mTeamTwoScore = mTeamTwoScore;
+    }
+
+    public String getmMatchDate() {
+        return mMatchDate;
+    }
+
+    public void setmMatchDate(String mMatchDate) {
+        this.mMatchDate = mMatchDate;
     }
 }

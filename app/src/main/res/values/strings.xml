@@ -17,6 +17,18 @@
     <string name="one">1</string>
     <string name="colon">:</string>
     <string name="bayern_munchen">Bayern Munchen</string>
+    <string name="test">How did the last game end? Test your knowledge!</string>
+    <string name="enter_score">Enter Score</string>
+    <string name="a_date">March 19, 1993</string>
+    <string name="resolve">Resolve</string>
+    <string name="reset">Reset</string>
+    <string name="resolve_clicked">Resolve Clicked</string>
+    <string name="versus">vs</string>
+    <string name="richtig">Richtig</string>
+    <string name="falsch">Falsch</string>
+    <string name="reset_clicked">Reset Clicked</string>
+    <string name="data_resetted">Data Reset Complete</string>
+    <string name="standings">League Standings</string>
 
     <string-array name="teamlist">
         <item>Bayern Munchen</item>

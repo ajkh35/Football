@@ -78,8 +78,8 @@ public class GameResultsAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        holder.mScoreOne.setText(match.getmTeamScore());
-        holder.mScoreTwo.setText(match.getmTeamTwoScore());
+        holder.mScoreOne.setText(String.valueOf(match.getmTeamScore()));
+        holder.mScoreTwo.setText(String.valueOf(match.getmTeamTwoScore()));
         return view;
     }
 
