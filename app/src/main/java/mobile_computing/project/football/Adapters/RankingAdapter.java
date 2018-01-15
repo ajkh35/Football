@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import mobile_computing.project.football.R;
+import mobile_computing.project.football.Utilities.ImageProcessor;
 
 /**
  * Created by ajay3 on 1/1/2018.
@@ -72,47 +73,13 @@ public class RankingAdapter extends BaseAdapter {
         holder.mTeamName.setText(String.valueOf(object.get("TeamName")));
         holder.mRanking.setText(String.valueOf(i+1));
         try {
-            holder.mImage.setImageBitmap(getImageBitmap(String.valueOf(object.get("TeamIconUrl"))));
-        } catch (IOException e) {
-            e.printStackTrace();
+            holder.mImage.setImageBitmap(ImageProcessor.getImageFromUrl((String) object.get("TeamIconUrl")));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         return view;
-    }
-
-    /**
-     * Get Image Bitmap
-     * @param url
-     * @return Returns the bitmap image
-     */
-    @SuppressLint("StaticFieldLeak")
-    @org.jetbrains.annotations.Contract(pure = true)
-    private Bitmap getImageBitmap(String url) throws IOException, ExecutionException, InterruptedException {
-
-        Bitmap bmp;
-
-        bmp = new AsyncTask<String,Integer,Bitmap>(){
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-
-                Bitmap bmp = null;
-                try {
-                    HttpURLConnection connection = (HttpURLConnection) new URL(strings[0]).openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream stream = connection.getInputStream();
-                    bmp = BitmapFactory.decodeStream(stream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return bmp;
-            }
-        }.execute(url).get();
-
-        return bmp;
     }
 
     /**

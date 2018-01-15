@@ -29,6 +29,25 @@
     <string name="reset_clicked">Reset Clicked</string>
     <string name="data_resetted">Data Reset Complete</string>
     <string name="standings">League Standings</string>
+    <string name="dummy_score">1 : 1</string>
+    <string name="dummy_match_start">Match Start: 19.03.1993 04:00 Uhr</string>
+    <string name="dummy_stadium">Stadium: Allianz Arena</string>
+    <string name="dummy_audience">Audience: 75000</string>
+    <string name="dummy_scorer">Ajay</string>
+    <string name="dummy_time">12. min</string>
+    <string name="dot">.</string>
+    <string name="min">min</string>
+    <string name="open_bracket">(</string>
+    <string name="close_bracket">)</string>
+    <string name="stadium">Stadium:</string>
+    <string name="audience">Audience:</string>
+    <string name="uhr">Uhr</string>
+    <string name="location_not_found">Location Not Found</string>
+    <string name="match_start">Match Start:</string>
+    <string name="comma">,</string>
+    <string name="match_details">Match Details</string>
+    <string name="half_time">Halbzeitergebnis</string>
+    <string name="not_available">Not Available</string>
 
     <string-array name="teamlist">
         <item>Bayern Munchen</item>

@@ -21,9 +21,11 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import mobile_computing.project.football.Models.Goal;
 import mobile_computing.project.football.Models.Match;
 import mobile_computing.project.football.Services.AllTeamsService;
 import mobile_computing.project.football.Services.GameResultsService;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         ranking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(Constants.TAG, Constants.RANKING_ACTIVITY_LAUNCHED);
+                Log.i(Constants.TAG, Constants.RANKING_LAUNCHED);
                 JSONArray jsonArray = null;
                 try {
                     String str = new AllTeamsService().execute().get();
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         gameResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(Constants.TAG, Constants.GAMERESULTS_ACTIVITY_LAUNCHED);
+                Log.i(Constants.TAG, Constants.GAME_RESULTS_LAUNCHED);
                 try {
                     String str = new GameResultsService().execute().get();
                     mGameResultsArray = (JSONArray) new JSONParser().parse(str);
@@ -123,6 +125,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Log.i(Constants.TAG, Constants.QUIZ_LAUNCHED);
+
+                // Applied the same service here so code might look repetitive
                 try {
                     String str = new GameResultsService().execute().get();
                     mGameResultsArray = (JSONArray) new JSONParser().parse(str);
@@ -154,11 +158,26 @@ public class MainActivity extends AppCompatActivity
 
             // initialize json objects
             Match match = new Match();
+            ArrayList<Goal> goalsList = new ArrayList<>();
             JSONObject json = (JSONObject) array.get(i);
             JSONObject group = (JSONObject) json.get("Group");
             JSONObject team1 = (JSONObject) json.get("Team1");
             JSONObject team2 = (JSONObject) json.get("Team2");
+            JSONObject location = (JSONObject) json.get("Location");
             JSONArray results = (JSONArray) json.get("MatchResults");
+            JSONArray goals = (JSONArray) json.get("Goals");
+
+            // set the goals list
+            int j=0;
+            while(j < goals.size()){
+                Goal goal = new Goal();
+                goal.setmGoalTime((Long) ((JSONObject) goals.get(j)).get("MatchMinute"));
+                goal.setmScorer((String) ((JSONObject) goals.get(j)).get("GoalGetterName"));
+                goal.setmScore1((Long) ((JSONObject) goals.get(j)).get("ScoreTeam1"));
+                goal.setmScore2((Long) ((JSONObject) goals.get(j)).get("ScoreTeam2"));
+                goalsList.add(goal);
+                j++;
+            }
 
             // set the properties
             match.setmGroupID(Integer.parseInt(group.get("GroupID").toString()));
@@ -173,11 +192,36 @@ public class MainActivity extends AppCompatActivity
             match.setmTeamTwoIconUrl((String) team2.get("TeamIconUrl"));
             match.setmTeamTwoID(Integer.parseInt(team2.get("TeamId").toString()));
             match.setmTeamTwoName((String) team2.get("TeamName"));
-            match.setmTeamScore(Integer.parseInt(((JSONObject)
-                    results.get(0)).get("PointsTeam1").toString()));
-            match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
-                    results.get(0)).get("PointsTeam2").toString()));
             match.setmMatchDate((String) json.get("MatchDateTime"));
+            match.setmAudience((Long) json.get("NumberOfViewers"));
+            match.setmGoalsList(goalsList);
+
+            // set scores
+            if(((JSONObject) results.get(0)).get("ResultName").equals(getString(R.string.half_time))){
+                match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
+                        results.get(0)).get("PointsTeam1").toString()));
+                match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
+                        results.get(0)).get("PointsTeam2").toString()));
+                match.setmTeamScore(Integer.parseInt(((JSONObject)
+                        results.get(1)).get("PointsTeam1").toString()));
+                match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+                        results.get(1)).get("PointsTeam2").toString()));
+            }else{
+                match.setmTeamScore(Integer.parseInt(((JSONObject)
+                        results.get(0)).get("PointsTeam1").toString()));
+                match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+                        results.get(0)).get("PointsTeam2").toString()));
+                match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
+                        results.get(1)).get("PointsTeam1").toString()));
+                match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
+                        results.get(1)).get("PointsTeam2").toString()));
+            }
+
+            // set location
+            if(location != null)
+                match.setmStadium((String) location.get("LocationStadium"));
+            else
+                match.setmStadium(getString(R.string.location_not_found));
 
             // add to list and increment
             list.add(match);

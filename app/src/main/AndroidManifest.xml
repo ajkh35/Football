@@ -33,6 +33,8 @@
         <activity
             android:name=".QuizActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ResultDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/list_item"
         android:background="@android:color/background_dark"
         android:layout_below="@id/top_layout"
         android:layout_width="match_parent"

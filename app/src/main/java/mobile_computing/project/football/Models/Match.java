@@ -1,6 +1,7 @@
 package mobile_computing.project.football.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by ajay3 on 1/12/2018.
@@ -23,6 +24,11 @@ public class Match implements Serializable{
     private String mTeamTwoIconUrl;
     private int mTeamScore;
     private int mTeamTwoScore;
+    private int mTeamHalfScore;
+    private int mTeamTwoHalfScore;
+    private String mStadium;
+    private Long mAudience;
+    private ArrayList<Goal> mGoalsList;
 
     public int getmGroupID() {
         return mGroupID;
@@ -149,5 +155,45 @@ public class Match implements Serializable{
 
     public void setmMatchDate(String mMatchDate) {
         this.mMatchDate = mMatchDate;
+    }
+
+    public ArrayList<Goal> getmGoalsList() {
+        return mGoalsList;
+    }
+
+    public void setmGoalsList(ArrayList<Goal> mGoalsList) {
+        this.mGoalsList = mGoalsList;
+    }
+
+    public int getmTeamHalfScore() {
+        return mTeamHalfScore;
+    }
+
+    public void setmTeamHalfScore(int mTeamHalfScore) {
+        this.mTeamHalfScore = mTeamHalfScore;
+    }
+
+    public int getmTeamTwoHalfScore() {
+        return mTeamTwoHalfScore;
+    }
+
+    public void setmTeamTwoHalfScore(int mTeamTwoHalfScore) {
+        this.mTeamTwoHalfScore = mTeamTwoHalfScore;
+    }
+
+    public String getmStadium() {
+        return mStadium;
+    }
+
+    public void setmStadium(String mStadium) {
+        this.mStadium = mStadium;
+    }
+
+    public Long getmAudience() {
+        return mAudience;
+    }
+
+    public void setmAudience(Long mAudience) {
+        this.mAudience = mAudience;
     }
 }

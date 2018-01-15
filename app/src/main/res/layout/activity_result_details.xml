@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mobile_computing.project.football.ResultDetailsActivity"
+    android:background="@android:color/background_dark">
+
+    <include
+        layout="@layout/my_toolbar"/>
+
+    <LinearLayout
+        android:layout_weight="0.15"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="top|center_horizontal">
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/team1_logo"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dp_75"
+                android:layout_height="@dimen/dp_75" />
+
+            <TextView
+                android:id="@+id/team1"
+                android:text="@string/fc_nurnberg"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_18"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.2"
+            android:layout_margin="@dimen/dp_10"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/final_score"
+                android:text="@string/dummy_score"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_18"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/half_score"
+                android:text="@string/dummy_score"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/team2_logo"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dp_75"
+                android:layout_height="@dimen/dp_75" />
+
+            <TextView
+                android:id="@+id/team2"
+                android:text="@string/bayern_munchen"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="0.15"
+        android:paddingLeft="@dimen/dp_10"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/match_start"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:text="@string/dummy_match_start"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/stadium"
+            android:text="@string/dummy_stadium"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/audience"
+            android:text="@string/dummy_audience"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="0.7"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ListView
+            android:id="@+id/goals_list"
+            android:divider="@null"
+            android:dividerHeight="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"/>
+    </LinearLayout>
+</LinearLayout>

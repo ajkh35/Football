@@ -16,4 +16,5 @@
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="sp_14">14sp</dimen>
+    <dimen name="dp_005">0.05dp</dimen>
 </resources>
