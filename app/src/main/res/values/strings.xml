@@ -13,7 +13,7 @@
     <string name="game_results">Game Results</string>
     <string name="quiz">Quiz</string>
     <string name="fc_nurnberg">FC Nurnberg</string>
-    <string name="spieltag">Spieltag</string>
+    <string name="spieltag">Results of match day</string>
     <string name="one">1</string>
     <string name="colon">:</string>
     <string name="bayern_munchen">Bayern Munchen</string>
@@ -48,6 +48,7 @@
     <string name="match_details">Match Details</string>
     <string name="half_time">Halbzeitergebnis</string>
     <string name="not_available">Not Available</string>
+    <string name="map">Map</string>
 
     <string-array name="teamlist">
         <item>Bayern Munchen</item>
@@ -69,4 +70,10 @@
         <item>TSG 1899 Hoffenheim</item>
         <item>SpVgg Greuther Fuerth</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="bundesliga">Bundesliga</string>
 </resources>

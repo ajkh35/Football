@@ -1,29 +1,23 @@
 package mobile_computing.project.football.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.support.v4.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
 import mobile_computing.project.football.R;
-import mobile_computing.project.football.Utilities.ImageProcessor;
 
 /**
  * Created by ajay3 on 1/1/2018.
@@ -33,10 +27,27 @@ public class RankingAdapter extends BaseAdapter {
 
     private Context mContext;
     private JSONArray mArray;
+    private ImageLoader mImageLoader;
+    private RequestQueue mQueue;
 
     public RankingAdapter(Context context, JSONArray array){
         mContext = context;
         mArray = array;
+        mQueue = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mQueue, new ImageLoader.ImageCache() {
+
+            private LruCache<String, Bitmap> mCache = new LruCache<>(10);
+
+            @Override
+            public Bitmap getBitmap(String url) {
+                return mCache.get(url);
+            }
+
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                mCache.put(url,bitmap);
+            }
+        });
     }
 
     @Override
@@ -57,7 +68,8 @@ public class RankingAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        ViewHolder holder;
+        final ViewHolder holder;
+        JSONObject object = (JSONObject) mArray.get(i);
 
         if(view == null){
             view = LayoutInflater.from(mContext)
@@ -68,17 +80,10 @@ public class RankingAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        JSONObject object = (JSONObject) mArray.get(i);
-
         holder.mTeamName.setText(String.valueOf(object.get("TeamName")));
         holder.mRanking.setText(String.valueOf(i+1));
-        try {
-            holder.mImage.setImageBitmap(ImageProcessor.getImageFromUrl((String) object.get("TeamIconUrl")));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        holder.mImage.setImageUrl((String) object.get("TeamIconUrl"), mImageLoader);
+
         return view;
     }
 
@@ -87,7 +92,7 @@ public class RankingAdapter extends BaseAdapter {
      */
     private class ViewHolder{
         private TextView mRanking;
-        private ImageView mImage;
+        private NetworkImageView mImage;
         private TextView mTeamName;
 
         ViewHolder(View item_view){

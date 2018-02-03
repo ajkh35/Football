@@ -4,22 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import mobile_computing.project.football.Models.Match;
 import mobile_computing.project.football.R;
 import mobile_computing.project.football.ResultDetailsActivity;
 import mobile_computing.project.football.Utilities.Constants;
-import mobile_computing.project.football.Utilities.ImageProcessor;
 
 /**
  * Created by ajay3 on 1/11/2018.
@@ -29,15 +32,37 @@ public class GameResultsAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<Match> mList;
+    private ImageLoader mImageLoader;
+    private RequestQueue mQueue;
 
     public GameResultsAdapter(Context context, ArrayList<Match> list){
         mContext = context;
         mList = list;
+        mQueue = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mQueue, new ImageLoader.ImageCache() {
+
+            private LruCache<String, Bitmap> mCache = new LruCache<>(10);
+
+            @Override
+            public Bitmap getBitmap(String url) {
+                return mCache.get(url);
+            }
+
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                mCache.put(url,bitmap);
+            }
+        });
     }
 
     @Override
     public int getCount() {
         return mList.size();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -68,15 +93,8 @@ public class GameResultsAdapter extends BaseAdapter {
         // set data to the held views
         holder.mTeamOne.setText(match.getmTeamName());
         holder.mTeamTwo.setText(match.getmTeamTwoName());
-
-        try {
-            holder.mTeamOneLogo.setImageBitmap(ImageProcessor.getImageFromUrl(match.getmTeamIconUrl()));
-            holder.mTeamTwoLogo.setImageBitmap(ImageProcessor.getImageFromUrl(match.getmTeamTwoIconUrl()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        holder.mTeamOneLogo.setImageUrl(match.getmTeamIconUrl(), mImageLoader);
+        holder.mTeamTwoLogo.setImageUrl(match.getmTeamTwoIconUrl(), mImageLoader);
 
         holder.mScoreOne.setText(String.valueOf(match.getmTeamScore()));
         holder.mScoreTwo.setText(String.valueOf(match.getmTeamTwoScore()));
@@ -104,8 +122,8 @@ public class GameResultsAdapter extends BaseAdapter {
 
         private TextView mTeamOne;
         private TextView mTeamTwo;
-        private ImageView mTeamOneLogo;
-        private ImageView mTeamTwoLogo;
+        private NetworkImageView mTeamOneLogo;
+        private NetworkImageView mTeamTwoLogo;
         private TextView mScoreOne;
         private TextView mScoreTwo;
         private RelativeLayout mListItem;

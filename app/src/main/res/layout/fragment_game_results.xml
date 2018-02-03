@@ -1,0 +1,37 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobile_computing.project.football.Fragments.GameResultsFragment">
+
+    <RelativeLayout
+        android:background="@android:color/background_dark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/league_name"
+                android:text="@string/spieltag"
+                android:textSize="@dimen/sp_18"
+                android:layout_margin="@dimen/dp_5"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/games_list"
+            android:layout_below="@id/top_layout"
+            android:dividerHeight="@dimen/dp_1"
+            android:divider="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+</FrameLayout>

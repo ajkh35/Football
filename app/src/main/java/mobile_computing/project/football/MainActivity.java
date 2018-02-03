@@ -21,7 +21,6 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -182,7 +181,7 @@ public class MainActivity extends AppCompatActivity
             // set the properties
             match.setmGroupID(Integer.parseInt(group.get("GroupID").toString()));
             match.setmGroupName((String) group.get("GroupName"));
-            match.setmGroupOrderID(Integer.parseInt(group.get("GroupOrderID").toString()));
+            match.setmSpieltag(Integer.parseInt(group.get("GroupOrderID").toString()));
             match.setmLeagueID(Integer.parseInt(json.get("LeagueId").toString()));
             match.setmLeagueName((String) json.get("LeagueName"));
             match.setmMatchID(Integer.parseInt(json.get("MatchID").toString()));
@@ -197,24 +196,26 @@ public class MainActivity extends AppCompatActivity
             match.setmGoalsList(goalsList);
 
             // set scores
-            if(((JSONObject) results.get(0)).get("ResultName").equals(getString(R.string.half_time))){
-                match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
-                        results.get(0)).get("PointsTeam1").toString()));
-                match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
-                        results.get(0)).get("PointsTeam2").toString()));
-                match.setmTeamScore(Integer.parseInt(((JSONObject)
-                        results.get(1)).get("PointsTeam1").toString()));
-                match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
-                        results.get(1)).get("PointsTeam2").toString()));
-            }else{
-                match.setmTeamScore(Integer.parseInt(((JSONObject)
-                        results.get(0)).get("PointsTeam1").toString()));
-                match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
-                        results.get(0)).get("PointsTeam2").toString()));
-                match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
-                        results.get(1)).get("PointsTeam1").toString()));
-                match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
-                        results.get(1)).get("PointsTeam2").toString()));
+            if(results.size() > 0){
+                if(((JSONObject) results.get(0)).get("ResultName").equals(getString(R.string.half_time))){
+                    match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
+                            results.get(0)).get("PointsTeam1").toString()));
+                    match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
+                            results.get(0)).get("PointsTeam2").toString()));
+                    match.setmTeamScore(Integer.parseInt(((JSONObject)
+                            results.get(1)).get("PointsTeam1").toString()));
+                    match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+                            results.get(1)).get("PointsTeam2").toString()));
+                }else{
+                    match.setmTeamScore(Integer.parseInt(((JSONObject)
+                            results.get(0)).get("PointsTeam1").toString()));
+                    match.setmTeamTwoScore(Integer.parseInt(((JSONObject)
+                            results.get(0)).get("PointsTeam2").toString()));
+                    match.setmTeamHalfScore(Integer.parseInt(((JSONObject)
+                            results.get(1)).get("PointsTeam1").toString()));
+                    match.setmTeamTwoHalfScore(Integer.parseInt(((JSONObject)
+                            results.get(1)).get("PointsTeam2").toString()));
+                }
             }
 
             // set location

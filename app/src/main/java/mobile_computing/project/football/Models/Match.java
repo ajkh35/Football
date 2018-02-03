@@ -11,7 +11,7 @@ public class Match implements Serializable{
 
     private int mGroupID;
     private String mGroupName;
-    private int mGroupOrderID;
+    private int mSpieltag;
     private int mMatchID;
     private String mMatchDate;
     private int mLeagueID;
@@ -46,14 +46,6 @@ public class Match implements Serializable{
         this.mGroupName = mGroupName;
     }
 
-    public int getmGroupOrderID() {
-        return mGroupOrderID;
-    }
-
-    public void setmGroupOrderID(int mGroupOrderID) {
-        this.mGroupOrderID = mGroupOrderID;
-    }
-
     public int getmMatchID() {
         return mMatchID;
     }
@@ -82,7 +74,7 @@ public class Match implements Serializable{
     public String toString() {
         return "Match{" + "matchid=" + mMatchID + "leaguename=" + mLeagueName
                 + "leagueid=" + mLeagueID + "groupid=" + mGroupID + "groupname=" + mGroupName
-                + "grouporderid=" + mGroupOrderID + "}";
+                + "matchday=" + mSpieltag + "}";
     }
 
     public String getmTeamName() {
@@ -195,5 +187,13 @@ public class Match implements Serializable{
 
     public void setmAudience(Long mAudience) {
         this.mAudience = mAudience;
+    }
+
+    public int getmSpieltag() {
+        return mSpieltag;
+    }
+
+    public void setmSpieltag(int mSpieltag) {
+        this.mSpieltag = mSpieltag;
     }
 }

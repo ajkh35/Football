@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/team1_logo"
                 android:layout_weight="0.35"
                 android:background="@drawable/fc_nuernberg"
@@ -70,7 +70,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/dp_5"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/team2_logo"
                 android:layout_weight="0.35"
                 android:background="@drawable/bayern_muenchen"
