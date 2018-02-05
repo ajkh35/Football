@@ -1,5 +1,6 @@
 package mobile_computing.project.football.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 import mobile_computing.project.football.Models.Match;
 import mobile_computing.project.football.R;
-import mobile_computing.project.football.ResultDetailsActivity;
+import mobile_computing.project.football.Activities.ResultDetailsActivity;
 import mobile_computing.project.football.Utilities.Constants;
 
 /**
@@ -109,6 +110,9 @@ public class GameResultsAdapter extends BaseAdapter {
                 Intent intent = new Intent(mContext, ResultDetailsActivity.class);
                 intent.putExtra(Constants.GAME_RESULT_CLICKED, match);
                 mContext.startActivity(intent);
+                ((Activity) mContext).overridePendingTransition(
+                        android.R.anim.slide_in_left,android.R.anim.slide_out_right
+                );
             }
         });
 

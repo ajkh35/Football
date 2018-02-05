@@ -1,4 +1,4 @@
-package mobile_computing.project.football;
+package mobile_computing.project.football.Activities;
 
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -9,17 +9,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
 import mobile_computing.project.football.Fragments.GameResultsFragment;
 import mobile_computing.project.football.Models.Match;
+import mobile_computing.project.football.R;
 import mobile_computing.project.football.Utilities.Constants;
 
-public class GameResultsActivity extends FragmentActivity {
+public class GameResultsActivity extends AppCompatActivity {
 
     private ArrayList<Match> mGamesList;
     private TextView mActivityHeader;
@@ -33,11 +37,17 @@ public class GameResultsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_results);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(
                     ContextCompat.getColor(this,android.R.color.background_dark)
             );
         }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPager = findViewById(R.id.pager);
         mActivityHeader = findViewById(R.id.activity_header);
@@ -113,5 +123,18 @@ public class GameResultsActivity extends FragmentActivity {
         public int getCount() {
             return mPageCount;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

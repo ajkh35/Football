@@ -76,4 +76,7 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="bundesliga">Bundesliga</string>
+    <string name="device_shaken">Device Shaken</string>
+    <string name="title_activity_map">Map</string>
+    <string name="start_point">Start point</string>
 </resources>

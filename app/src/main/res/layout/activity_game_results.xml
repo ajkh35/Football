@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mobile_computing.project.football.GameResultsActivity"
+    tools:context="mobile_computing.project.football.Activities.GameResultsActivity"
     android:background="@android:color/background_dark">
 
     <include
+        android:id="@+id/toolbar"
         layout="@layout/my_toolbar" />
 
     <android.support.v4.view.ViewPager

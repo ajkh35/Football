@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mobile_computing.project.football.ResultDetailsActivity"
+    tools:context="mobile_computing.project.football.Activities.ResultDetailsActivity"
     android:background="@android:color/background_dark">
 
     <include
+        android:id="@+id/my_toolbar"
         layout="@layout/my_toolbar"/>
 
     <LinearLayout

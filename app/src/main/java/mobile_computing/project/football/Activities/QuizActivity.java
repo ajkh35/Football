@@ -1,10 +1,16 @@
-package mobile_computing.project.football;
+package mobile_computing.project.football.Activities;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +22,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mobile_computing.project.football.Models.Match;
+import mobile_computing.project.football.R;
 import mobile_computing.project.football.Utilities.Constants;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements SensorEventListener{
 
     private ArrayList<Match> mList;
     private TextView mVersus;
@@ -29,6 +36,8 @@ public class QuizActivity extends AppCompatActivity {
     private EditText mScore2;
     private Match mCurrentMatch;
     private TextView mActivityHeader;
+    private SensorManager mSensorManager;
+    private long mLastSensorUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,11 @@ public class QuizActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.background_dark));
         }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mVersus = findViewById(R.id.versus);
         mDate = findViewById(R.id.date);
@@ -84,6 +98,24 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mLastSensorUpdate = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL
+        );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
     }
 
     /**
@@ -137,5 +169,45 @@ public class QuizActivity extends AppCompatActivity {
     private int getRandomIndex(int bound){
         Random random = new Random();
         return random.nextInt(bound);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float[] values = sensorEvent.values;
+
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
+
+        float acceleration = (x*x + y*y + z*z)/(SensorManager.GRAVITY_EARTH*SensorManager.GRAVITY_EARTH);
+        long actualTime = sensorEvent.timestamp;
+
+        if(acceleration >= 3){
+            if(actualTime - mLastSensorUpdate < 200){
+                return;
+            }
+
+            mLastSensorUpdate = actualTime;
+//            Toast.makeText(this,"something moved",Toast.LENGTH_SHORT).show();
+            Log.i(Constants.TAG, getString(R.string.device_shaken));
+            setMatchData();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }

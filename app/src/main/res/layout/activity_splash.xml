@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobile_computing.project.football.SplashActivity"
+    tools:context="mobile_computing.project.football.Activities.SplashActivity"
     android:background="@android:color/background_dark">
 
     <RelativeLayout

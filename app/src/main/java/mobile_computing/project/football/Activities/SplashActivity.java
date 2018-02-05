@@ -1,4 +1,4 @@
-package mobile_computing.project.football;
+package mobile_computing.project.football.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import mobile_computing.project.football.R;
 
 public class SplashActivity extends AppCompatActivity {
 

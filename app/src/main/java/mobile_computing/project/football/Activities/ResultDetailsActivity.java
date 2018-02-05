@@ -1,10 +1,12 @@
-package mobile_computing.project.football;
+package mobile_computing.project.football.Activities;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import mobile_computing.project.football.Adapters.GoalsAdapter;
 import mobile_computing.project.football.Models.Goal;
 import mobile_computing.project.football.Models.Match;
+import mobile_computing.project.football.R;
 import mobile_computing.project.football.Utilities.Constants;
 import mobile_computing.project.football.Utilities.ImageProcessor;
 
@@ -40,6 +43,11 @@ public class ResultDetailsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.background_dark));
         }
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mGoalsList = findViewById(R.id.goals_list);
         mTeam1Logo = findViewById(R.id.team1_logo);
@@ -123,5 +131,19 @@ public class ResultDetailsActivity extends AppCompatActivity {
         String time = arr[1].substring(0, arr[1].lastIndexOf(":")) + " " + getString(R.string.uhr);
 
         return getString(R.string.match_start) + " " + date + " " + time;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

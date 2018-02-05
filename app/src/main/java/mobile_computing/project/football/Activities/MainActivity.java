@@ -1,4 +1,4 @@
-package mobile_computing.project.football;
+package mobile_computing.project.football.Activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 import mobile_computing.project.football.Models.Goal;
 import mobile_computing.project.football.Models.Match;
+import mobile_computing.project.football.R;
 import mobile_computing.project.football.Services.AllTeamsService;
 import mobile_computing.project.football.Services.GameResultsService;
 import mobile_computing.project.football.Utilities.Constants;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity
                     intent.putExtra(Constants.ALL_TEAMS_ARRAY, jsonArray.toJSONString());
                 }
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity
                 if(mGameResultsArray != null){ intent.putExtra(Constants.GAME_RESULTS_ARRAY,
                         getMatchList(mGameResultsArray)); }
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -141,6 +144,20 @@ public class MainActivity extends AppCompatActivity
                 if(mGameResultsArray != null){ intent.putExtra(Constants.QUIZ_DATA,
                         getMatchList(mGameResultsArray)); }
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        // Launch the map activity
+        Button map = findViewById(R.id.map);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Constants.TAG, Constants.MAP_LAUNCHED);
+
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }

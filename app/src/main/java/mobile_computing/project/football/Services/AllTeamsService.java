@@ -2,6 +2,10 @@ package mobile_computing.project.football.Services;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +13,12 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import mobile_computing.project.football.Utilities.Constants;
 
 /**
  * Created by ajay3 on 1/2/2018.
