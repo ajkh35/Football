@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.github.MKergall:osmbonuspack:6.4'
     compile 'org.osmdroid:osmdroid-android:5.6.5'
+    testCompile 'org.mockito:mockito-core:2.23.0'
 }
