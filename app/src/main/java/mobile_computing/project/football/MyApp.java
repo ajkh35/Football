@@ -18,21 +18,10 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
-        this.setAppContext(getApplicationContext());
     }
 
     @Contract(pure = true)
     public static Application getInstance(){
         return mInstance;
-    }
-
-    @Contract(pure = true)
-    public static Context getAppContext() {
-        return mAppContext;
-    }
-
-    public void setAppContext(Context mAppContext) {
-        this.mAppContext = mAppContext;
     }
 }
