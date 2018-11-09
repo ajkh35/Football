@@ -2,4 +2,6 @@
 <resources>
 
     <integer name="fifteen">15</integer>
+    <integer name="three">3</integer>
+    <integer name="four">4</integer>
 </resources>

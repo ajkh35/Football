@@ -79,4 +79,5 @@
     <string name="device_shaken">Device Shaken</string>
     <string name="title_activity_map">Map</string>
     <string name="start_point">Start point</string>
+    <string name="no_settings">No Settings Yet</string>
 </resources>
