@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
      * @param array
      * @return ArrayList of matches
      */
-    private ArrayList<Match> getMatchList(JSONArray array){
+    public ArrayList<Match> getMatchList(JSONArray array){
         ArrayList<Match> list = new ArrayList<>();
         int i=0;
         while (i < array.size()){

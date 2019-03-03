@@ -1,5 +1,6 @@
 package mobile_computing.project.football.Activities;
 
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;

@@ -23,10 +23,9 @@ import mobile_computing.project.football.Utilities.Constants;
 /**
  * Created by ajay3 on 1/2/2018.
  */
-
 public class AllTeamsService extends AsyncTask<String,Integer,String> {
 
-    private final String URL = "https://www.openligadb.de/api/getavailableteams/bl1/2016";
+    private final String URL = "https://www.openligadb.de/api/getavailableteams/bl1/2018";
 
     @NonNull
     private String readInput(BufferedReader buffer) throws IOException {
